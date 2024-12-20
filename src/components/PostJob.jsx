@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 import Swal from 'sweetalert2';
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 function PostJob({ isOpen, onClose, onJobPosted, editJob }) {
   const [jobData, setJobData] = useState({
     title: '',
@@ -42,8 +44,8 @@ function PostJob({ isOpen, onClose, onJobPosted, editJob }) {
     e.preventDefault();
     try {
       const url = editJob 
-        ? `http://localhost:8000/jobLists/${editJob.id}`
-        : 'http://localhost:8000/jobLists';
+        ? `${API_URL}/jobLists/${editJob.id}`
+        : `${API_URL}/jobLists`;
       
       const method = editJob ? 'PUT' : 'POST';
       

@@ -5,6 +5,8 @@ import { Search, Briefcase, Building2, MapPin, Clock, Filter, Pencil, Trash2, Mo
 import PostJob from './PostJob';
 import Swal from 'sweetalert2';
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 function Home() {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
@@ -31,7 +33,7 @@ function Home() {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await fetch('http://localhost:8000/jobLists');
+        const response = await fetch(`${API_URL}/jobLists`);
         if (!response.ok) {
           throw new Error('Failed to fetch jobs');
         }
@@ -58,7 +60,7 @@ function Home() {
 
   const refreshJobs = async () => {
     try {
-      const response = await fetch('http://localhost:8000/jobLists');
+      const response = await fetch(`${API_URL}/jobLists`);
       const data = await response.json();
       setJobs(data);
     } catch (error) {
@@ -79,7 +81,7 @@ function Home() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          const response = await fetch(`http://localhost:8000/jobLists/${jobId}`, {
+          const response = await fetch(`${API_URL}/jobLists/${jobId}`, {
             method: 'DELETE',
           });
           if (response.ok) {

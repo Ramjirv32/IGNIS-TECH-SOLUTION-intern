@@ -3,6 +3,7 @@ const cors = require("cors");
 const { Pool } = require("pg");
 const dotenv = require("dotenv");
 
+// Load environment variables from .env file
 dotenv.config();
 
 const app = express();
@@ -15,12 +16,13 @@ app.use((req, res, next) => {
   next();
 });
 
+// Update pool configuration to use backend .env variables
 const pool = new Pool({
-  user: "postgres",
-  host: "localhost",
-  database: "intern",
-  password: "vikas",
-  port: 5432,
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD,
+  port: process.env.DB_PORT,
 });
 
 pool.connect()
@@ -120,7 +122,7 @@ app.delete("/jobLists/:id", async (req, res) => {
   }
 });
 
-const port = process.env.PORT || 8000;
+const port = process.env.API_PORT || 8000;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
